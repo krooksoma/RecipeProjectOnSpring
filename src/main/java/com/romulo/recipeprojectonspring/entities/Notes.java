@@ -1,15 +1,17 @@
 package com.romulo.recipeprojectonspring.entities;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"recipe"})
+@ToString
+@RequiredArgsConstructor
+@EqualsAndHashCode(exclude="recipe")
 @Entity
 public class Notes {
 
@@ -24,4 +26,9 @@ public class Notes {
 
     @Lob
     private String recipeNotes;
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof Notes;
+    }
+
 }

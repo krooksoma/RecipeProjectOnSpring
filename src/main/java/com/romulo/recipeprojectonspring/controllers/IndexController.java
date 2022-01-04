@@ -5,31 +5,28 @@ import com.romulo.recipeprojectonspring.entities.Category;
 import com.romulo.recipeprojectonspring.entities.UnitOfMeasure;
 import com.romulo.recipeprojectonspring.repositories.CategoryRepository;
 import com.romulo.recipeprojectonspring.repositories.UnitOfMeasureRepository;
+import com.romulo.recipeprojectonspring.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
 
+@Slf4j
 @Controller
 public class IndexController {
 
-    private CategoryRepository categoryRepository;
-    private UnitOfMeasureRepository unitOfMeasureRepository;
+    private RecipeService recipeService;
 
-    public IndexController(CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
-        this.categoryRepository = categoryRepository;
-        this.unitOfMeasureRepository = unitOfMeasureRepository;
+    public IndexController(RecipeService recipeService) {
+        this.recipeService = recipeService;
     }
-
     @RequestMapping({" ", "/", "/index"})
-    public String getIndexPage(){
+    public String getIndexPage(Model model){
+        log.debug("Getting index Page");
 
-        Optional<Category> categoryOptional = categoryRepository.findByDescription("American");
-        Optional<UnitOfMeasure> unitOfMeasure = unitOfMeasureRepository.findByDescription("Tablespoon");
-
-        categoryOptional.ifPresent(catOptional -> System.out.println("Cat id is: " + catOptional.getId()));
-
-        unitOfMeasure.ifPresent(ofMeasure -> System.out.println("Uom id id: " + ofMeasure.getId()));
+        model.addAttribute("recipes", recipeService.getRecipes());
         return "index";
     }
 }

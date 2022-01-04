@@ -1,6 +1,7 @@
 package com.romulo.recipeprojectonspring.entities;
 
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,9 +9,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@EqualsAndHashCode(exclude = {"recipe"})
+@Data
+@EqualsAndHashCode(exclude="recipe")
 @Entity
 public class Ingredient {
 
